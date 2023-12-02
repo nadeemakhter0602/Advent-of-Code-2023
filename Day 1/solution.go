@@ -11,6 +11,7 @@ func PanicErr(err error) {
 		panic(err)
 	}
 }
+
 func getCalibrationSum(file *os.File) int {
 	sum := 0
 	number := make([]int, 0)
