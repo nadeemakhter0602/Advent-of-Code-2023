@@ -1,4 +1,4 @@
-# Advent-of-Code-2023
+# Advent of Code 2023
 
 [Advent of Code](https://adventofcode.com/) is an [Advent Calendar](https://en.wikipedia.org/wiki/Advent_calendar) of multiple programming puzzles released each day throughout December 1st through 25th every year since 2015. They are great to train and test your problem solving abilities and programming skills.
 
