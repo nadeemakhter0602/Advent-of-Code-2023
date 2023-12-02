@@ -12,18 +12,20 @@ func PanicErr(err error) {
 	}
 }
 
+func getNumber(number []int) int {
+	firstDigit := int(number[0])
+	secondDigit := int(number[len(number)-1])
+	return firstDigit*10 + secondDigit
+}
+
 func getCalibrationSum(file *os.File) int {
 	sum := 0
 	number := make([]int, 0)
-	firstDigit := 0
-	secondDigit := 0
 	for true {
 		buffer := make([]byte, 1)
 		_, err := file.Read(buffer)
 		if err == io.EOF {
-			firstDigit = int(number[0])
-			secondDigit = int(number[len(number)-1])
-			sum += firstDigit*10 + secondDigit
+			sum += getNumber(number)
 			break
 		}
 		PanicErr(err)
@@ -32,9 +34,7 @@ func getCalibrationSum(file *os.File) int {
 			number = append(number, intValue-48)
 		}
 		if buffer[0] == []byte{'\n'}[0] {
-			firstDigit = int(number[0])
-			secondDigit = int(number[len(number)-1])
-			sum += firstDigit*10 + secondDigit
+			sum += getNumber(number)
 			number = make([]int, 0)
 		}
 	}
