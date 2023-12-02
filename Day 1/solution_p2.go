@@ -84,6 +84,9 @@ func getCalibrationSum(file *os.File) int {
 		if buffer[0] == []byte{'\n'}[0] {
 			sum += getNumber(numbers)
 			numbers = make([]int, 0)
+			window3 = ""
+			window4 = ""
+			window5 = ""
 		}
 	}
 	return sum
