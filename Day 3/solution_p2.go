@@ -29,89 +29,24 @@ func getPartNumbersSum(file *os.File) int {
 	schematic := generateEngineSchematic(file)
 	sum := 0
 	gearToPartNumber := make(map[string][]int)
+	relativeCoordinates := [][]int{{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {1, 1}, {1, -1}, {-1, -1}, {-1, 1}}
 	for j, line := range schematic {
 		number := 0
 		gearCoordinates := make([]string, 0)
 		for i, element := range line {
 			if isDigit(element) {
 				number = 10*number + (int(element) - '0')
-				if i+1 < len(line) {
-					right := rune(schematic[j][i+1])
-					if right == '*' {
-						gearCoordinate := strconv.Itoa(j) + "," + strconv.Itoa(i+1)
-						gearCoordinatesLen := len(gearCoordinates)
-						if gearCoordinatesLen == 0 || gearCoordinates[gearCoordinatesLen-1] != gearCoordinate {
-							gearCoordinates = append(gearCoordinates, gearCoordinate)
-						}
-					}
-				}
-				if i-1 > 0 {
-					left := rune(schematic[j][i-1])
-					if left == '*' {
-						gearCoordinate := strconv.Itoa(j) + "," + strconv.Itoa(i-1)
-						gearCoordinatesLen := len(gearCoordinates)
-						if gearCoordinatesLen == 0 || gearCoordinates[gearCoordinatesLen-1] != gearCoordinate {
-							gearCoordinates = append(gearCoordinates, gearCoordinate)
-						}
-					}
-				}
-				if j+1 < len(schematic) {
-					down := rune(schematic[j+1][i])
-					if down == '*' {
-						gearCoordinate := strconv.Itoa(j+1) + "," + strconv.Itoa(i)
-						gearCoordinatesLen := len(gearCoordinates)
-						if gearCoordinatesLen == 0 || gearCoordinates[gearCoordinatesLen-1] != gearCoordinate {
-							gearCoordinates = append(gearCoordinates, gearCoordinate)
-						}
-					}
-				}
-				if j-1 > 0 {
-					up := rune(schematic[j-1][i])
-					if up == '*' {
-						gearCoordinate := strconv.Itoa(j-1) + "," + strconv.Itoa(i)
-						gearCoordinatesLen := len(gearCoordinates)
-						if gearCoordinatesLen == 0 || gearCoordinates[gearCoordinatesLen-1] != gearCoordinate {
-							gearCoordinates = append(gearCoordinates, gearCoordinate)
-						}
-					}
-				}
-				if i+1 < len(line) && j+1 < len(schematic) {
-					down_right := rune(schematic[j+1][i+1])
-					if down_right == '*' {
-						gearCoordinate := strconv.Itoa(j+1) + "," + strconv.Itoa(i+1)
-						gearCoordinatesLen := len(gearCoordinates)
-						if gearCoordinatesLen == 0 || gearCoordinates[gearCoordinatesLen-1] != gearCoordinate {
-							gearCoordinates = append(gearCoordinates, gearCoordinate)
-						}
-					}
-				}
-				if i-1 > 0 && j+1 < len(schematic) {
-					down_left := rune(schematic[j+1][i-1])
-					if down_left == '*' {
-						gearCoordinate := strconv.Itoa(j+1) + "," + strconv.Itoa(i-1)
-						gearCoordinatesLen := len(gearCoordinates)
-						if gearCoordinatesLen == 0 || gearCoordinates[gearCoordinatesLen-1] != gearCoordinate {
-							gearCoordinates = append(gearCoordinates, gearCoordinate)
-						}
-					}
-				}
-				if i-1 > 0 && j-1 > 0 {
-					up_left := rune(schematic[j-1][i-1])
-					if up_left == '*' {
-						gearCoordinate := strconv.Itoa(j-1) + "," + strconv.Itoa(i-1)
-						gearCoordinatesLen := len(gearCoordinates)
-						if gearCoordinatesLen == 0 || gearCoordinates[gearCoordinatesLen-1] != gearCoordinate {
-							gearCoordinates = append(gearCoordinates, gearCoordinate)
-						}
-					}
-				}
-				if i+1 < len(line) && j-1 > 0 {
-					up_right := rune(schematic[j-1][i+1])
-					if up_right == '*' {
-						gearCoordinate := strconv.Itoa(j-1) + "," + strconv.Itoa(i+1)
-						gearCoordinatesLen := len(gearCoordinates)
-						if gearCoordinatesLen == 0 || gearCoordinates[gearCoordinatesLen-1] != gearCoordinate {
-							gearCoordinates = append(gearCoordinates, gearCoordinate)
+				for _, relativeCoordinate := range relativeCoordinates {
+					y := j + relativeCoordinate[0]
+					x := i + relativeCoordinate[1]
+					if y >= 0 && y < len(schematic) && x >= 0 && x < len(line) {
+						elementXY := rune(schematic[y][x])
+						if elementXY == '*' {
+							gearCoordinate := strconv.Itoa(y) + "," + strconv.Itoa(x)
+							gearCoordinatesLen := len(gearCoordinates)
+							if gearCoordinatesLen == 0 || gearCoordinates[gearCoordinatesLen-1] != gearCoordinate {
+								gearCoordinates = append(gearCoordinates, gearCoordinate)
+							}
 						}
 					}
 				}
