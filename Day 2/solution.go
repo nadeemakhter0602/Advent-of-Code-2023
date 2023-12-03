@@ -65,5 +65,5 @@ func main() {
 	file, err := os.Open("input.txt")
 	PanicErr(err)
 	defer file.Close()
-	fmt.Println("PART 1:", getPossibleGamesSum(file))
+	fmt.Println("PART 1:", getPossibleGamesSum(file)) // 2528
 }
