@@ -45,5 +45,5 @@ func main() {
 	file, err := os.Open("input.txt")
 	PanicErr(err)
 	defer file.Close()
-	fmt.Println("PART 1:", getCalibrationSum(file))
+	fmt.Println("PART 1:", getCalibrationSum(file)) // 53921
 }
