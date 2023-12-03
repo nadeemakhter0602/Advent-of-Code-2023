@@ -106,7 +106,7 @@ func generateEngineSchematic(file *os.File) []string {
 }
 
 func main() {
-	file, err := os.Open("sample.txt")
+	file, err := os.Open("input.txt")
 	PanicErr(err)
 	defer file.Close()
 	fmt.Println("PART 1:", getPartNumbersSum(file))
