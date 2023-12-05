@@ -62,17 +62,13 @@ func getWins(line string) int {
 func updateCards(cardNumber int, wins int, numberOfCards []int) []int {
 	if len(numberOfCards) < cardNumber {
 		numberOfCards = append(numberOfCards, 1)
-	} else {
-		numberOfCards[cardNumber-1] += 1
 	}
 	cardCopies := numberOfCards[cardNumber-1]
-	for j := 0; j < cardCopies; j++ {
-		for i := cardNumber + 1; i <= cardNumber+wins; i++ {
-			if len(numberOfCards) < i {
-				numberOfCards = append(numberOfCards, 1)
-			} else {
-				numberOfCards[i-1] += 1
-			}
+	for i := cardNumber + 1; i <= cardNumber+wins; i++ {
+		if len(numberOfCards) < i {
+			numberOfCards = append(numberOfCards, 1+cardCopies)
+		} else {
+			numberOfCards[i-1] += cardCopies
 		}
 	}
 	return numberOfCards
